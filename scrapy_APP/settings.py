@@ -9,16 +9,32 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+# 一些不便于上传GitHub的信息放在同步录下的 config.py 文件里，对于提示缺少的值，建立相应的文件自己写入即可
+from scrapy_APP.config import *
 # For this project
+
 import os
 # PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
 PROJECT_ROOT = os.path.dirname(__file__)
+DRIVER_DIR = os.path.abspath(os.path.join(PROJECT_ROOT, os.path.pardir, 'driver'))
+DRIVER_NAME = "chromedriver.exe"
+DRIVER_FILE = os.path.abspath(os.path.join(DRIVER_DIR, DRIVER_NAME))
+
+# For Simple Desktop Spider Only
+IMAGES_URLS_FIELD = 'src'
+IMAGES_STORE = os.path.abspath(os.path.join(PROJECT_ROOT, 'image_downloaded', 'simple_desktop'))
+
 
 # For Scrapy-Redis
 # Enables scheduling storing requests queue in redis.
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 # Ensure all spiders share same duplicates filter through redis.
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+# Redis config
+try:
+    REDIS_URL = redis_url
+except NameError:
+    REDIS_URL = "redis://127.0.0.1"
 
 # default
 BOT_NAME = 'scrapy_APP'
@@ -77,7 +93,8 @@ ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'scrapy_redis.pipelines.RedisPipeline': 300
+    # 'scrapy_redis.pipelines.RedisPipeline': 300
+    'scrapy.pipelines.images.ImagesPipeline': 300
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

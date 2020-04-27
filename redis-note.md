@@ -42,6 +42,7 @@
 + zadd key score val [score val ...] # 添加元素和分数，重复val会覆盖分数
 + zrangebyscore key min max # 获取分数在某范围内的所有元素
 + zcount key min max # 分数范围内的元素数量
++ zrange key min max # 按照下标取值，-1是最后一个。zset根据score增序排列
 
 # 使用Scrapy-redis编写分布式爬虫
 ## 配置
@@ -79,3 +80,19 @@ class MySpider(RedisSpider):
 + push urls to redis:
 
 `redis-cli lpush myspider:start_urls http://google.com`
+
+## 创建项目(使用bloomfilter算法进行url去重)
+1. 克隆`scrapy-redis`项目，将核心包`scrapy_redis`复制到scrapy项目下
+2. 下载`utils.bloomfilter.py`文件
+3. `scrapy_redis.dupefilter.py`中导入`bloomfilter.py`中的`conn`, `PyBloomFilter`
+4. `scrapy_redis.dupefilter.py`中`__init__`方法中进行实例化：`self.bf = PyBloomFilter(conn=conn, key=key)`
+5. `scrapy_redis.dupefilter.py`中重写`request_seen`方法
+    ```python
+    def request_seen(self, request):
+        fp = self.request_fingerprint(request)
+        if self.bf.is_exist(fp):
+            return True
+        else:
+            self.bf.add(fp)
+            return False
+    ```

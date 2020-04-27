@@ -1,5 +1,7 @@
 .vscode
 .idea
+scrapy_APP/config.py
+scrapy_APP/image_downloaded/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
