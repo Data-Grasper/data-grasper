@@ -2,6 +2,7 @@
 .idea
 scrapy_APP/config.py
 scrapy_APP/image_downloaded/*
+test
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
