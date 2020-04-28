@@ -13,3 +13,6 @@ python3.6，需要pip安装的包有：
 + selenium
 + pillow
 
+## 笔记
+[scrapy-redis & redis](redis-note.md)
+[scrapy-advancd](scrapy-advance.md)

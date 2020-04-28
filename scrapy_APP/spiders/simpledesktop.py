@@ -18,7 +18,11 @@ class SimpleDesktopSpider(RedisSpider):
 
     def parse(self, response):
         image_details = response.xpath("//div[@class='desktop']/a/@href").extract()
-        # img = response.xpath("//div[@class='desktop']/a/@href").extract_first()
+        next_page = response.xpath("//a[@class='back']/@href").extract_first('')
+        if next_page:
+            url = urljoin(response.url, next_page)
+            yield scrapy.Request(url, callback=self.parse)
+        img = response.xpath("//div[@class='desktop']/a/@href").extract_first()
         for img in image_details:
             url = urljoin(response.url, img)
 

@@ -37,7 +37,7 @@ class Extractor:
         """
         关闭浏览器
         """
-        self.driver.close()
+        self.driver.quit()
 
     def wait_an_element_by_xpath(self, xpath):
         """阻塞获取元素"""
@@ -48,6 +48,7 @@ class Extractor:
             return element
         except Exception as e:
             print("ERROR:", e)
+            return None
 
 
 class DesktopLinkExtractor(Extractor):
@@ -58,6 +59,7 @@ class DesktopLinkExtractor(Extractor):
         if not downloadObj:
             return None
         link = downloadObj.get_attribute('href')
+
         self.driver.get(link)
         imgObj = self.wait_an_element_by_xpath("//img")
         if not imgObj:
