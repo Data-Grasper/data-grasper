@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>First page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    </head>
+    <body>
+        <p th:text="'welcome to page '+${id}"></p>
+        <a th:if="${id<1000}" th:href="@{${id+1}}">+1</a>
+        <a th:if="${id<1000}" th:href="@{${id+2}}">+2</a>
+        <a th:if="${id<1000}" th:href="@{${id+3}}">+3</a>
+        <a th:if="${id<1000}" th:href="@{${id+4}}">+4</a>
+        <a th:if="${id<1000}" th:href="@{${id+5}}">+5</a>
+        <a th:if="${id<1000}" th:href="@{${id+6}}">+6</a>
+        <a th:if="${id<1000}" th:href="@{${id+7}}">+7</a>
+        <a th:if="${id<1000}" th:href="@{${id+8}}">+8</a>
+    </body>
+</html>

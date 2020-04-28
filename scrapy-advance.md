@@ -70,3 +70,64 @@ stats对象会被IoC注入到每个Spider中，通过self.crawler.stats访问
 详情请查看官方文档
 
 一些信号支持返回 Twisted deferreds ，一些不支持。
+
+### 如何监听和绑定信号
+使用`crawler.signals.connect(callback, signal)`
+```python
+from scrapy import Spider, signals
+class DmozSpider(Spider):
+    @classmethod
+    def from_crawler(cls, crawler, *args, **kwargs):
+        spider = super(DmozSpider, cls).from_crawler(crawler, *args, **kwargs)
+        crawler.signals.connect(spider.spider_closed, signal=signals.spider_closed)
+        return spider
+```
+callback函数的参数要满足signal文档里的要求。
+
+## 扩展开发
+所有的pipeline、middleware等本质上都是一个扩展。这些类的方法在manager中被与特定的信号量进行了绑定，所以能够进行功能的实现和调度。
+
+自己实现一个扩展，就是在`from_crawler`方法中进行setting获取、信号绑定等工作，编写一些回调函数来在特定阶段执行一些特定任务
+
+`__init__`函数入参可以随意定义。每个扩展的入口都是`from_crawler`方法，对象也在这个方法中创建。
+```python
+import logging
+from scrapy import signals
+from scrapy.exceptions import NotConfigured
+
+logger = logging.getLogger(__name__)
+
+class SpiderOpenCloseLogging(object):
+
+    def __init__(self, item_count):
+        self.item_count = item_count
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        # 判断setting中的属性
+        if not crawler.settings.getbool('MYEXT_ENABLED'):
+            raise NotConfigured
+
+        # 获取setting中的属性
+        item_count = crawler.settings.getint('MYEXT_ITEMCOUNT', 1000)
+
+        # 实例化对象
+        ext = cls(item_count)
+
+        # 绑定信号量
+        crawler.signals.connect(ext.spider_opened, signal=signals.spider_opened)
+        crawler.signals.connect(ext.spider_closed, signal=signals.spider_closed)
+        crawler.signals.connect(ext.item_scraped, signal=signals.item_scraped)
+
+        # 返回对象
+        return ext
+
+    def spider_opened(self, spider):
+        pass
+
+    def spider_closed(self, spider):
+        pass
+
+    def item_scraped(self, item, spider):
+        pass
+```
