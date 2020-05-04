@@ -28,6 +28,7 @@ IMAGES_STORE = os.path.abspath(os.path.join(PROJECT_ROOT, 'image_downloaded', 's
 # For Scrapy-Redis
 # Enables scheduling storing requests queue in redis.
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.PriorityQueue"
 # Ensure all spiders share same duplicates filter through redis.
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 # Redis config

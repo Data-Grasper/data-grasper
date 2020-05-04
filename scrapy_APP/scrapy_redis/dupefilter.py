@@ -101,13 +101,13 @@ class RFPDupeFilter(BaseDupeFilter):
         """
         fp = self.request_fingerprint(request)
         # This returns the number of values added, zero if already exists.
-        if self.bf.is_exist(fp):
-            return True
-        else:
-            self.bf.add(fp)
-            return False
-        # added = self.server.sadd(self.key, fp)
-        # return added == 0
+        # if self.bf.is_exist(fp):
+        #     return True
+        # else:
+        #     self.bf.add(fp)
+        #     return False
+        added = self.server.sadd(self.key, fp)
+        return added == 0
 
     def request_fingerprint(self, request):
         """Returns a fingerprint for a given request.

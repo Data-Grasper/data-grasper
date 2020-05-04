@@ -96,3 +96,8 @@ class MySpider(RedisSpider):
             self.bf.add(fp)
             return False
     ```
+   
+## 常见问题
++ Q: (error) MISCONF Redis is configured to save RDB snapshots, but is currently not able to persist on disk. Commands that may modify the data set are disabled. Please
+check Redis logs for details about the error.
++ A: 在redis-cli中`config set stop-writes-on-bgsave-error no`

@@ -1,5 +1,7 @@
 import importlib
 import six
+import scrapy
+import json
 
 from scrapy.utils.misc import load_object
 
@@ -151,6 +153,13 @@ class Scheduler(object):
         self.queue.clear()
 
     def enqueue_request(self, request):
+        # my  code
+        while self.server.llen(defaults.NEW_URLS_LIST):
+            data = json.loads(self.server.lpop(defaults.NEW_URLS_LIST))
+            callllback_func = getattr(self.spider, data[2])
+            req = scrapy.Request(url=data[0], dont_filter=False, callback=callllback_func, priority=data[1])
+            self.queue.push(req)
+        # old code
         if not request.dont_filter and self.df.request_seen(request):
             self.df.log(request, self.spider)
             return False

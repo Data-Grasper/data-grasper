@@ -10,3 +10,7 @@ import scrapy
 
 class DesktopItem(scrapy.Item):
     src = scrapy.Field()
+
+
+class DemoItem(scrapy.Item):
+    url = scrapy.Field()
