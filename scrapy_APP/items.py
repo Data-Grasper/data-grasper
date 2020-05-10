@@ -7,6 +7,16 @@
 
 import scrapy
 
+class WangyiproItem(scrapy.Item):
+    head = scrapy.Field()
+    tag = scrapy.Field()
+    url = scrapy.Field()
+    img_url = scrapy.Field()
+    title=scrapy.Field()
+    content=scrapy.Field()
+    time=scrapy.Field()
+    comments=scrapy.Field()
+    pass
 
 class DesktopItem(scrapy.Item):
     src = scrapy.Field()
@@ -14,3 +24,4 @@ class DesktopItem(scrapy.Item):
 
 class DemoItem(scrapy.Item):
     url = scrapy.Field()
+

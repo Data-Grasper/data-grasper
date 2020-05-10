@@ -9,8 +9,9 @@ import time
 
 class DemoSpider(RedisSpider):
     name = "demo"
-    redis_key = 'demo:start_urls'
+
     allowed_domains = ['localhost']
+    redis_key = 'demo:start_urls'
     custom_settings = {
         'ITEM_PIPELINES': {
             'scrapy_APP.pipelines.JsonWithEncodingPipeline': 300
