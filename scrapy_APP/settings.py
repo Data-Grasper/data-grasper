@@ -91,7 +91,7 @@ LOG_LEVEL='ERROR'
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-    #'scrapy_APP.middlewares.AppDownloaderMiddleware': 543
+    'scrapy_APP.middlewares.AppDownloaderMiddleware': 543,
     'scrapy_APP.middlewares.WangyiproDownloaderMiddleware': 543,
 }
 
@@ -105,7 +105,7 @@ DOWNLOADER_MIDDLEWARES = {
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     # 'scrapy_redis.pipelines.RedisPipeline': 300
-    #'scrapy.pipelines.images.ImagesPipeline': 300
+    'scrapy.pipelines.images.ImagesPipeline': 300,
     'scrapy_APP.pipelines.WangyiproPipeline':300
 }
 
