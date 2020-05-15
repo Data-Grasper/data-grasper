@@ -15,16 +15,12 @@ class WangyiproDownloaderMiddleware(object):
 
     #拦截到响应对象，即下载器传递给spider的响应对象
     def process_response(self, request, response, spider):
-        #request：响应对象对应的请求对象
-        #response：拦截到的响应对象
-        #spider：爬虫文件中对应的爬虫类实例
+
         if request.url in ["http://news.163.com/domestic/","http://news.163.com/world/","http://war.163.com/","http://news.163.com/air/"]:
             spider.bro.get(url=request.url)
 
-            #将滚轮滚动到最底部
             js="window.scrollTo(0,document.body.scrollHeight)"
             spider.bro.execute_script(js)
-            #如果没有获取到更多的数据，这里给浏览器一定的加载时间
             #time.sleep(3
             page_text=spider.bro.page_source
             with open("./domestic.html","w",encoding="utf8") as fp:

@@ -54,7 +54,6 @@ class WangyiSpider(RedisSpider):
         content_list = response.xpath("//div[@class='post_text']/p/text()").extract()
         content = "\n".join(content_list)
         item["content"] = content
-        yield item
 
         domainDicts = getDomainDicts()
         sensitiveDicts = getSensitiveDicts()
@@ -62,8 +61,23 @@ class WangyiSpider(RedisSpider):
         sentence = sentenceProcess(sentence)
         domainDicts_definate = getSentenceDomain(domainDicts, sentence)
         sensitiveDicts_definate = getSentenceSensitive(sensitiveDicts, sentence)
-        print(domainDicts_definate)
-        print(sensitiveDicts_definate)
+        item["education"]=domainDicts_definate["教育"]
+        item["IT"]=domainDicts_definate["IT"]
+        item["animals"]=domainDicts_definate["动物"]
+        item["Medicine"]=domainDicts_definate["医学"]
+        item["famous"]=domainDicts_definate["历史名人"]
+        item["poetry"]=domainDicts_definate["古诗"]
+        item["Sensitives"]=domainDicts_definate["敏感词"]
+        item["car_brand_part"]=domainDicts_definate["汽车品牌、零件"]
+        item["law"]=domainDicts_definate["法律"]
+        item["financial"]=domainDicts_definate["财经"]
+        item["food"]=domainDicts_definate["食物"]
+        item["positives"]=sensitiveDicts_definate["positive"]
+        item["negatives"]=sensitiveDicts_definate["negative"]
+        #print(domainDicts_definate)
+        #print(sensitiveDicts_definate)
+        yield item
+
 
     def closed(self, spider):
         # 实现父类方法，爬虫结束时调用

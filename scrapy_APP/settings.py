@@ -105,7 +105,8 @@ DOWNLOADER_MIDDLEWARES = {
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     # 'scrapy_redis.pipelines.RedisPipeline': 300
-    'scrapy.pipelines.images.ImagesPipeline': 300,
+    'scrapy_APP.pipelines.MysqlTwistedPipeline': 1,
+    #'scrapy.pipelines.images.ImagesPipeline': 300,
     'scrapy_APP.pipelines.WangyiproPipeline':300
 }
 
