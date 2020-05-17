@@ -1,0 +1,40 @@
+body{
+        margin:0;
+}
+.box{
+    width:1440px;
+    height:768px;
+    margin:0 auto;
+}
+.header{
+    height:68px;
+    background-color:rgb(255, 255, 255);    
+}
+.main{
+    height:660px;
+    background-color:rgb(165, 91, 91);
+    position:relative;
+    }
+.main .left{
+    width:50%;
+    height:660px;
+    position:absolute;
+    left:0;
+    top:0;
+    background-color:#0fccaa;
+    }
+.main .right-up{
+    width: 50%;
+    height:330px;
+    position:absolute;
+    right:0;
+    background-color:rgb(121, 113, 236);
+    }
+.main .right-down{
+    width: 50%;
+    height: 330px;
+    position: absolute;
+    right:0;
+    top:330px;
+    background-color: beige;
+    }
