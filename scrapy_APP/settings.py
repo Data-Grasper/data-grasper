@@ -32,6 +32,7 @@ SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.PriorityQueue"
 # Ensure all spiders share same duplicates filter through redis.
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 # Redis config
+#Redis config
 try:
     REDIS_URL = redis_url
 except NameError:
@@ -43,6 +44,14 @@ BOT_NAME = 'scrapy_APP'
 SPIDER_MODULES = ['scrapy_APP.spiders']
 NEWSPIDER_MODULE = 'scrapy_APP.spiders'
 
+# 是否允许暂停，即程序意外宕机重启后从上次意外退出的地方重新爬取
+SCHEDULER_PERSIST = True
+
+#Redis服务器地址，代码拷贝到其他服务器后，爬取的数据将保存到如下地址的redis服务器中
+REDIS_HOST="47.116.17.149"
+
+#Redis服务器端口
+REDIS_PORT=6379
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'scrapy_APP (+http://www.yourdomain.com)'
@@ -50,6 +59,7 @@ NEWSPIDER_MODULE = 'scrapy_APP.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
+LOG_LEVEL='ERROR'
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
@@ -81,9 +91,10 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'scrapy_APP.middlewares.AppDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy_APP.middlewares.AppDownloaderMiddleware': 543,
+    'scrapy_APP.middlewares.WangyiproDownloaderMiddleware': 543,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -95,7 +106,9 @@ ROBOTSTXT_OBEY = False
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     # 'scrapy_redis.pipelines.RedisPipeline': 300
-    'scrapy.pipelines.images.ImagesPipeline': 300
+    'scrapy_APP.pipelines.MysqlTwistedPipeline': 1,
+    #'scrapy.pipelines.images.ImagesPipeline': 300,
+    'scrapy_APP.pipelines.WangyiproPipeline':300
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

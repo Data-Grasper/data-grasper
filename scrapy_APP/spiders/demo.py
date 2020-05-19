@@ -9,13 +9,13 @@ import time
 
 class DemoSpider(RedisSpider):
     name = "demo"
-    redis_key = 'demo:start_urls'
+
     allowed_domains = ['localhost']
+    redis_key = 'demo:start_urls'
     custom_settings = {
         'ITEM_PIPELINES': {
-            # 'scrapy_APP.pipelines.JsonWithEncodingPipeline': 300
-        },
-        'LOG_LEVEL': "ERROR"
+            'scrapy_APP.pipelines.JsonWithEncodingPipeline': 300
+        }
     }
 
     def parse(self, response):
@@ -27,7 +27,7 @@ class DemoSpider(RedisSpider):
         if xpath:
             for x in xpath:
                 next_url = urljoin(response.url, x)
-                time.sleep(1)
+                time.sleep(2)
                 yield scrapy.Request(url=next_url)
 
 
