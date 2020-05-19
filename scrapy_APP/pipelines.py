@@ -54,8 +54,6 @@ class JsonWithEncodingPipeline(object):
 
     def spider_closed(self, spider):
         self.file.close()
-<<<<<<< HEAD
-=======
 
 class ArticleImagesPipeline(ImagesPipeline):
     def item_completed(self, results, item, info):
@@ -95,4 +93,3 @@ class MysqlTwistedPipeline(object):
     def do_insert(self, cursor, item):
         insert_sql, params = item.get_sql()
         cursor.execute(insert_sql, tuple(params))
->>>>>>> b8bd87052c78515e60df5b60b72c38669e9ad057

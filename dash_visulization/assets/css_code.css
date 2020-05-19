@@ -1,0 +1,86 @@
+body {
+    margin: 0;
+}
+
+.box {
+    width: 1440px;
+    height: 768px;
+    margin: 0 auto;
+}
+
+.header {
+    height: 68px;
+    background-color: rgb(255, 255, 255);
+}
+
+.main {
+    height: 660px;
+    /*background-color:rgb(165, 91, 91);*/
+    position: relative;
+}
+
+.main .veryleft {
+    left: 0;
+    width: 5%;
+    height: 100%;
+    position: fixed;
+    top: 40%;
+    /*background-color: #1e1e1e;*/
+    cursor: pointer;
+}
+
+.main .veryright {
+    /*align-self: end;*/
+    left: 95%;
+    width: 5%;
+    height: 100%;
+    position: fixed;
+    top: 40%;
+    /*background-color: #1e1e1e;*/
+    cursor: pointer;
+}
+
+.main .left {
+    width: 45%;
+    margin-left: 5%;
+    height: 900px;
+    position: absolute;
+    /*left:0;*/
+    top: 0;
+    /*background-color: #a8bab5;*/
+}
+
+.main .right-up {
+    width: 45%;
+    margin-right: 5%;
+    height: 450px;
+    position: absolute;
+    right: 0;
+    /*background-color:#0fccaa;*/
+}
+
+.main .right-down {
+    width: 45%;
+    margin-right: 5%;
+    height: 450px;
+    position: absolute;
+    right: 0;
+    top: 450px;
+    /*background-color:#0fccaa;*/
+}
+
+.main .footer {
+    top: 900px;
+    position: center;
+    width: 100%;
+    margin-top: -100px;
+}
+
+img {
+    width: 100%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+
+.invisible {display: none;}
