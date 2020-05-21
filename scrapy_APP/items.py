@@ -136,7 +136,7 @@ class commentSensitive(scrapy.Item):
     negatives = scrapy.Field()
 
     def get_sql(self):
-        insert_sql ="insert into tianyaDict (id, item_id,comment, positives, negatives) values(%s, %s,%s, %s, %s);"
+        insert_sql ="insert into tianyaSensitive (id, item_id,comment, positives, negatives) values(%s, %s,%s, %s, %s);"
         params = []
         params.append(self.get('id', ''))
         params.append(self.get('item_id', ''))
