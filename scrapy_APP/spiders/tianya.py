@@ -2,7 +2,7 @@ import scrapy
 from selenium import webdriver
 from scrapy_APP.scrapy_redis.spiders import RedisSpider
 from scrapy_APP.utils.domaindict import *
-from scrapy_APP.items import TianyaItem,TianyaDict
+from scrapy_APP.items import TianyaItem,TianyaDict,commentSensitive
 class TianyaSpider(RedisSpider):
     name = 'tianya'
     allowed_domains = None
@@ -55,26 +55,23 @@ class TianyaSpider(RedisSpider):
             itemDict["positives"] = sensitiveDicts_definate["positive"]
             itemDict["negatives"] = sensitiveDicts_definate["negative"]
             yield  itemDict
-
-
-        '''
-        for i in context:
-            item = TianyaItem()
-            for key in i.keys():
-                if key != "pics":
-                    item[key] = i[key]
-
-            url = "http://bbs.tianya.cn/post-develop-" + str(i["artId"])+"-1.shtml"
-            print(url)
-            yield scrapy.Request(url=url, callback=self.getContent, meta={"item": item}, dont_filter=True)
-        '''
+            yield scrapy.Request(url=item["url"], callback=self.getContent, meta={"id": item["id"]}, dont_filter=True)
 
     def getContent(self, response):
         # 解析新闻文本内容
-        item = response.meta.get("item")
+        item_id = response.meta.get("id")
+        commentItems = response.xpath("//div[@class='bbs-content']").extract()
+        for i in commentItems[:min(len(commentItems), 20)]:
+            content = re.sub(r'<[^>]+>', "", i)
+            sentence = sentenceProcess(content)
+            sensitiveDicts_definate = getSentenceSensitive(sensitiveDicts, sentence)
+            item = commentSensitive()
+            item["item_id"] = item_id
+            item["comment"] = content
+            item["positives"] = sensitiveDicts_definate["positive"]
+            item["negatives"] = sensitiveDicts_definate["negative"]
+            yield item
 
-
-        
     def closed(self, spider):
         # 实现父类方法，爬虫结束时调用
         print("爬虫结束")

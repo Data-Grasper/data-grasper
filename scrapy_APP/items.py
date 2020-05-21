@@ -107,7 +107,8 @@ class TianyaDict(scrapy.Item):
     negatives = scrapy.Field()
 
     def get_sql(self):
-        insert_sql ="insert into tianyaDict (id, education, IT, animals, Medicine, famous, poetry, Sensitives, car_brand_part,law, financial, food, positives, negatives) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+        insert_sql ="insert into tianyaDict (id, education, IT, animals, Medicine," \
+                    " famous, poetry, Sensitives, car_brand_part,law, financial, food, positives, negatives) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
         params = []
         params.append(self.get('id', ''))
         params.append(self.get('education', ''))
@@ -126,6 +127,23 @@ class TianyaDict(scrapy.Item):
         return insert_sql, params
 
 
+class commentSensitive(scrapy.Item):
+    id = scrapy.Field()
+    item_id = scrapy.Field()
+    comment = scrapy.Field()
+
+    positives = scrapy.Field()
+    negatives = scrapy.Field()
+
+    def get_sql(self):
+        insert_sql ="insert into tianyaDict (id, item_id,comment, positives, negatives) values(%s, %s,%s, %s, %s);"
+        params = []
+        params.append(self.get('id', ''))
+        params.append(self.get('item_id', ''))
+        params.append(self.get('comment', ''))
+        params.append(self.get('positives', ''))
+        params.append(self.get('negatives', ''))
+        return insert_sql, params
 
 class DesktopItem(scrapy.Item):
     src = scrapy.Field()
