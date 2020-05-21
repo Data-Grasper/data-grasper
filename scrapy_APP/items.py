@@ -74,10 +74,19 @@ class TianyaItem(scrapy.Item):
     content = scrapy.Field()
 
     def get_sql(self):
-        insert_sql = "insert into wangyiitem (title, url) values(%s,%s);"
+        insert_sql = "insert into tianyaitem (id, item,item_name,count_data,top_count," \
+                     "title,url,author_id,author_name,content) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
         params = []
+        params.append(self.get('id', ''))
+        params.append(self.get('item', ''))
+        params.append(self.get('item_name', ''))
+        params.append(self.get('count', ''))
+        params.append(self.get('top_count', ''))
         params.append(self.get('title', ''))
         params.append(self.get('url', ''))
+        params.append(self.get('author_id', ''))
+        params.append(self.get('author_name', ''))
+        params.append(self.get('content', ''))
         return insert_sql, params
 
 class TianyaDict(scrapy.Item):
@@ -98,7 +107,7 @@ class TianyaDict(scrapy.Item):
     negatives = scrapy.Field()
 
     def get_sql(self):
-        insert_sql ="insert into wangyiitem (id, education, IT, animals, Medicine, famous, poetry, Sensitives, car_brand_part,law, financial, food, positives, negatives) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+        insert_sql ="insert into tianyaDict (id, education, IT, animals, Medicine, famous, poetry, Sensitives, car_brand_part,law, financial, food, positives, negatives) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
         params = []
         params.append(self.get('id', ''))
         params.append(self.get('education', ''))

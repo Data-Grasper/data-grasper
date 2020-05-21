@@ -54,7 +54,7 @@ class TianyaSpider(RedisSpider):
             itemDict["food"] = domainDicts_definate["食物"]
             itemDict["positives"] = sensitiveDicts_definate["positive"]
             itemDict["negatives"] = sensitiveDicts_definate["negative"]
-
+            yield  itemDict
 
 
         '''
