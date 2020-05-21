@@ -38,6 +38,7 @@ class TianyaSpider(RedisSpider):
             yield itemData
 
 
+
             itemDict = TianyaDict()
             sentence = itemDict["content"]
             sentence = sentenceProcess(sentence)
