@@ -29,10 +29,12 @@ class TianyaSpider(RedisSpider):
         context = json.loads(context)["data"]["rows"]
         for item in context:
             itemData = TianyaItem()
-            list_keys = ["item","item_name","id","count","top_count","title",\
+            list_keys = ["item","item_name","id","top_count","title",\
                     "url","author_id","author_name","content"]
+
             for key in list_keys:
                 itemData[key] = item[key]
+            itemData["count_data"] = item["count"]
             yield itemData
 
             itemDict = TianyaDict()
