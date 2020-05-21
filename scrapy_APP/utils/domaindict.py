@@ -153,3 +153,5 @@ def getSentenceSensitive(sensitiveDicts,sentence):
     return domainDicts_definate
 
 
+domainDicts = getDomainDicts()
+sensitiveDicts = getSensitiveDicts()

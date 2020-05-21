@@ -58,7 +58,64 @@ class WangyiproItem(scrapy.Item):
         params.append(self.get('negatives', ''))
         return insert_sql, params
 
+
     pass
+
+class TianyaItem(scrapy.Item):
+    item = scrapy.Field()
+    item_name = scrapy.Field()
+    id = scrapy.Field()
+    count = scrapy.Field()
+    top_count = scrapy.Field()
+    title = scrapy.Field()
+    url = scrapy.Field()
+    author_id = scrapy.Field()
+    author_name = scrapy.Field()
+    content = scrapy.Field()
+
+    def get_sql(self):
+        insert_sql = "insert into wangyiitem (title, url) values(%s,%s);"
+        params = []
+        params.append(self.get('title', ''))
+        params.append(self.get('url', ''))
+        return insert_sql, params
+
+class TianyaDict(scrapy.Item):
+    id = scrapy.Field()
+    education = scrapy.Field()
+    IT = scrapy.Field()
+    animals = scrapy.Field()
+    Medicine = scrapy.Field()
+    famous = scrapy.Field()
+    poetry = scrapy.Field()
+    Sensitives = scrapy.Field()
+    car_brand_part = scrapy.Field()
+    law = scrapy.Field()
+    financial = scrapy.Field()
+    food = scrapy.Field()
+
+    positives = scrapy.Field()
+    negatives = scrapy.Field()
+
+    def get_sql(self):
+        insert_sql ="insert into wangyiitem (id, education, IT, animals, Medicine, famous, poetry, Sensitives, car_brand_part,law, financial, food, positives, negatives) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+        params = []
+        params.append(self.get('id', ''))
+        params.append(self.get('education', ''))
+        params.append(self.get('IT', ''))
+        params.append(self.get('animals', ''))
+        params.append(self.get('Medicine', ''))
+        params.append(self.get('famous', ''))
+        params.append(self.get('poetry', ''))
+        params.append(self.get('Sensitives', ''))
+        params.append(self.get('car_brand_part', ''))
+        params.append(self.get('law', ''))
+        params.append(self.get('financial', ''))
+        params.append(self.get('food', ''))
+        params.append(self.get('positives', ''))
+        params.append(self.get('negatives', ''))
+        return insert_sql, params
+
 
 
 class DesktopItem(scrapy.Item):

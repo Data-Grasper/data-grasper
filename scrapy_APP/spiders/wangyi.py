@@ -8,11 +8,11 @@ class WangyiSpider(RedisSpider):
     allowed_domains = ['news.163.com']
     redis_key = 'wangyi:start_urls'
 
-    # start_urls = ['https://news.163.com/']
+    #start_urls = ['https://news.163.com/']
 
     def __init__(self):
         # 实例化一个浏览器，只需要执行一次
-        self.bro = webdriver.Chrome(executable_path='chromedriver.exe')
+        self.bro = webdriver.Chrome()
 
     def parse(self, response):
         lis = response.xpath("//div[@class='ns_area list']/ul/li")
@@ -24,7 +24,7 @@ class WangyiSpider(RedisSpider):
         for li in li_list:
             url = li.xpath("./a/@href").extract_first()
             title = li.xpath("./a/text()").extract_first()
-            # 对每个板块对应的url发起请求，获取页面数据(标题，缩略图，关键字，发布时间，url，评论数)
+            # 对每个板块对应的wangyiurl发起请求，获取页面数据(标题，缩略图，关键字，发布时间，url，评论数)
             yield scrapy.Request(url=url, callback=self.parseSecond, meta={"title": title}, dont_filter=True)
 
     def parseSecond(self, response):
@@ -55,8 +55,7 @@ class WangyiSpider(RedisSpider):
         content = "\n".join(content_list)
         item["content"] = content
 
-        domainDicts = getDomainDicts()
-        sensitiveDicts = getSensitiveDicts()
+
         sentence =content
         sentence = sentenceProcess(sentence)
         domainDicts_definate = getSentenceDomain(domainDicts, sentence)
