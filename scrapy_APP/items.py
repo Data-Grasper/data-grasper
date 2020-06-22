@@ -67,3 +67,6 @@ class DesktopItem(scrapy.Item):
 
 class DemoItem(scrapy.Item):
     url = scrapy.Field()
+    like1 = scrapy.Field()
+    like2 = scrapy.Field()
+

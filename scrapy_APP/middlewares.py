@@ -133,7 +133,3 @@ class AppDownloaderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
-<<<<<<< HEAD
-=======
-
->>>>>>> b8bd87052c78515e60df5b60b72c38669e9ad057

@@ -15,19 +15,17 @@ class DemoSpider(RedisSpider):
     custom_settings = {
         'ITEM_PIPELINES': {
             'scrapy_APP.pipelines.JsonWithEncodingPipeline': 300
-        }
+        }  # 选择我们提供的数据持久化pipeline
     }
 
     def parse(self, response):
-        item = DemoItem()
-        item['url'] = response.url
-        # yield item
-        print("scraping:", response.url)
-        xpath = response.xpath("//a/@href").extract()
+        item = DemoItem()  # 根据感兴趣的字段生成的item
+        item['url'] = response.url  # 将数据包装成item
+        yield item  # 提交Item
+        print("scraping:", response.url)  # 做些别的事情
+        xpath = response.xpath("//a/@href").extract()  # 解析新的待抓取url
         if xpath:
             for x in xpath:
                 next_url = urljoin(response.url, x)
-                time.sleep(2)
-                yield scrapy.Request(url=next_url)
-
-
+                time.sleep(0.5)
+                yield scrapy.Request(url=next_url, callback=self.parse)  # 提交Request并指定解析器

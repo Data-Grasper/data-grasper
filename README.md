@@ -20,5 +20,7 @@ python3.6，需要pip安装的包有：
 
 ## 笔记
 [scrapy-redis & redis](redis-note.md)
+
 [scrapy-advancd](scrapy-advance.md)
+
 [增量抓取](more.md)
